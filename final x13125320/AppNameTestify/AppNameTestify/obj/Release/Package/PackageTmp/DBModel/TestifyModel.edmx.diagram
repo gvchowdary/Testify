@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="40c0c09cd104461c90a2d06661c1f3f8" Name="Diagram1" ZoomLevel="73">
+        <EntityTypeShape EntityType="TestifyModel.Contact" Width="1.5" PointX="8.25" PointY="5" />
+        <EntityTypeShape EntityType="TestifyModel.EmailTemplate" Width="1.5" PointX="10.5" PointY="4.25" />
+        <EntityTypeShape EntityType="TestifyModel.LandlordHouseDetail" Width="1.5" PointX="3" PointY="1.625" />
+        <EntityTypeShape EntityType="TestifyModel.LandlordRegistration" Width="1.5" PointX="0.75" PointY="1.25" />
+        <EntityTypeShape EntityType="TestifyModel.TenantRegistration" Width="1.5" PointX="5.25" PointY="1" />
+        <EntityTypeShape EntityType="TestifyModel.TenantTicket" Width="1.5" PointX="7.5" PointY="1.625" />
+        <AssociationConnector Association="TestifyModel.FK_LandlordHouseDetail_LandlordRegistration" />
+        <AssociationConnector Association="TestifyModel.FK_TenantRegistration_TenantRegistration" />
+        <AssociationConnector Association="TestifyModel.FK_TenantTickets_TenantRegistration" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

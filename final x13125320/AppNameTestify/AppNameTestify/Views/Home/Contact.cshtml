@@ -1,0 +1,85 @@
+﻿@model AppNameTestify.Models.ContactModel
+@{
+    ViewBag.Title = "Contact";
+}
+
+
+<div class="row">
+    <div class="box">
+        <div class="col-lg-12">
+            <hr>
+            <h2 class="intro-text text-center">
+                Contact
+                <strong>Testify</strong>
+            </h2>
+            <hr>
+        </div>
+
+        <div class="col-md-4">
+            <p>
+                Phone:
+                <strong>086.361.5033</strong>
+            </p>
+            <p>
+                Email:
+                <strong><a href="mailto:testifynci@gmail.com">testifynci@gmail.com</a></strong>
+            </p>
+            <p>
+                Address:
+                <strong>
+                    NCI IFSC 
+                    <br>Mayor Square, D-1 Ireland.
+                </strong>
+            </p>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</div>
+<div class="row">
+    <div class="box">
+        <div class="col-lg-12">
+            <hr>
+            <h2 class="intro-text text-center">
+                Contact
+                <strong>form</strong>
+            </h2>
+            <hr>
+         
+            @using (Html.BeginForm())
+            {
+                @Html.ValidationSummary(true)
+                <div class="row">
+                    <div class="form-group col-lg-4">
+                       @Html.LabelFor(m => m.Name)
+                       @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.Name)
+                    </div>
+                    <div class="form-group col-lg-4">
+                        @Html.LabelFor(m => m.Email)
+                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.Email)
+                    </div>
+                    <div class="form-group col-lg-4">
+                        @Html.LabelFor(m => m.PhoneNo)
+                        @Html.TextBoxFor(m => m.PhoneNo, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.PhoneNo)
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="form-group col-lg-4">
+                        @Html.LabelFor(m => m.Message)
+                        @Html.TextAreaFor(m => m.Message, new { style = "width: 1110px; height: 150px;" })
+                        @Html.ValidationMessageFor(m => m.Message)
+                    </div>
+                    <div class="form-group col-lg-12">
+                       
+                        <button type="submit" class="btn btn-default">Submit</button>
+                    </div>
+                </div>
+            }
+        </div>
+        @section Scripts {
+            @Scripts.Render("~/bundles/jquery")
+            @Scripts.Render("~/bundles/jqueryval")
+        }
+    </div>
+</div>

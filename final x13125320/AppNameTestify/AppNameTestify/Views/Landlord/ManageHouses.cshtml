@@ -1,0 +1,45 @@
+﻿@model   AppNameTestify.Models.HouseModel
+@{
+    ViewBag.Title = "Testify";
+    Layout = "~/Views/Shared/_LandlordLayout.cshtml";
+}
+<script src="~/Scripts/jquery-1.7.1.min.js"></script>
+<script src="~/Scripts/Testify.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        LoadLoginPartialView(1);
+    });
+</script>
+
+<div class="row">
+    <div class="box">
+        <div class="col-lg-12">
+            <hr>
+            <h2 class="intro-text text-center">
+                Manage House Details
+                <strong></strong>
+            </h2>
+            <hr>
+            <div>
+                @*<div style="float:right;padding-bottom:5px">
+                    @Html.ActionLink("Manage Tenant Report", "ManageTicketDetails", "Landlord")
+                </div>*@
+
+                <div style="clear:both"></div>
+                <div>
+                    <table id="grid"></table>
+                    <div id="pager"></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<link href="~/Content/themes/base/jquery-ui.css" rel="stylesheet" />
+<link href="~/Content/jquery.jqGrid/ui.jqgrid.css" rel="stylesheet" />
+<script src="~/Scripts/jquery-1.7.1.min.js"></script>
+<script src="~/Scripts/jquery-ui-1.8.20.min.js"></script>
+<script src="~/Scripts/i18n/grid.locale-en.js"></script>
+<script src="~/Scripts/jquery.jqGrid.min.js"></script>
+<script src="~/Scripts/LandlordHouseList.js"></script>

@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="AppNameTestifyModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+  <EntityContainer Name="AppNameTestifyModelStoreContainer">
+    <EntitySet Name="LandlordRegister" EntityType="AppNameTestifyModel.Store.LandlordRegister" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="TenantRegistration" EntityType="AppNameTestifyModel.Store.TenantRegistration" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="FK_TenantRegistration_LandlordRegister" Association="AppNameTestifyModel.Store.FK_TenantRegistration_LandlordRegister">
+      <End Role="LandlordRegister" EntitySet="LandlordRegister" />
+      <End Role="TenantRegistration" EntitySet="TenantRegistration" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="LandlordRegister">
+    <Key>
+      <PropertyRef Name="LandlordId" />
+    </Key>
+    <Property Name="LandlordId" Type="int" Nullable="false" />
+    <Property Name="FirstName" Type="varchar" MaxLength="50" />
+    <Property Name="LastName" Type="varchar" MaxLength="50" />
+    <Property Name="PPSNNO" Type="varchar" MaxLength="50" />
+    <Property Name="PhoneNo" Type="int" />
+    <Property Name="Address" Type="varchar" MaxLength="250" />
+    <Property Name="IsActive" Type="bit" />
+  </EntityType>
+  <EntityType Name="TenantRegistration">
+    <Key>
+      <PropertyRef Name="TenantId" />
+    </Key>
+    <Property Name="TenantId" Type="int" Nullable="false" />
+    <Property Name="FirstName" Type="varchar" MaxLength="20" />
+    <Property Name="LastName" Type="varchar" MaxLength="20" />
+    <Property Name="LandlordId" Type="int" />
+    <Property Name="PRTBNO" Type="varchar" MaxLength="20" />
+    <Property Name="PhoneNo" Type="int" />
+    <Property Name="Address" Type="varchar" MaxLength="250" />
+    <Property Name="IsActive" Type="int" />
+  </EntityType>
+  <Association Name="FK_TenantRegistration_LandlordRegister">
+    <End Role="LandlordRegister" Type="AppNameTestifyModel.Store.LandlordRegister" Multiplicity="0..1" />
+    <End Role="TenantRegistration" Type="AppNameTestifyModel.Store.TenantRegistration" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="LandlordRegister">
+        <PropertyRef Name="LandlordId" />
+      </Principal>
+      <Dependent Role="TenantRegistration">
+        <PropertyRef Name="LandlordId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

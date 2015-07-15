@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <parameter name="TestifyEntities-Web.config Connection String" description="TestifyEntities Connection String used in web.config by the application to access the database." defaultValue="metadata=res://*/DBModel.TestifyModel.csdl|res://*/DBModel.TestifyModel.ssdl|res://*/DBModel.TestifyModel.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=yo8m18mij8.database.windows.net,1433;initial catalog=testify;integrated security=False;user id=Testify@yo8m18mij8;password=Chinni29123;connect timeout=60;encrypt=False;trustservercertificate=False;MultipleActiveResultSets=True;App=EntityFramework&quot;" tags="SqlConnectionString">
+    <parameterEntry kind="XmlFile" scope="C:\\Users\\vchowdary\\Downloads\\New\ folder\\final\ x13125320\\AppNameTestify\\AppNameTestify\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='TestifyEntities']/@connectionString" />
+  </parameter>
+</parameters>

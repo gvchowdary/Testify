@@ -1,0 +1,60 @@
+﻿.HomeDivContentWidth 
+{
+    width: 100px;
+    
+}
+#dvLogin a:link {
+   
+    text-decoration: blink;
+}
+.rightPadding {
+    padding-right: 50px;
+}
+.lblStyle 
+{
+    float: left;
+    width: 140px
+    
+}
+.floatLeft {
+    float: left;
+    padding-right: 5px;
+    width:33.33333333%;
+}
+.clearBoth {
+    clear: both;
+}
+.button  {
+    outline: 0; 
+    margin: 0 4px 0 0;
+    padding: 0 1em;
+    height: 2em;
+    text-decoration: none !important; 
+    cursor: pointer; 
+    position: relative;
+    text-align: center;
+    display: inline-block;
+    background-color:Green;
+    border:1px solid Lime;
+}
+a.button { color:White;}
+.btnStyle {
+    height: 33px;
+    width: 80px;
+}
+.field-validation-error
+{
+     color: #ff0000;
+}
+.validation-summary-errors
+{
+    font-weight:bold;
+    color:#ff0000;
+}
+.logInfo
+{
+    float: right; 
+    padding-right:30px; 
+    color: #fff;
+    text-transform:capitalize;
+}

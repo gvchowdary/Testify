@@ -1,0 +1,95 @@
+﻿@{
+    ViewBag.Title = "Testify";
+}
+
+<script>
+    
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.carousel').carousel({
+            interval: 5000 //changes the speed
+        })
+    });
+</script>
+
+<div class="row">
+    <div class="box">
+        <div class="col-lg-12 text-center">
+            <div id="carousel-example-generic" class="carousel slide">
+                <!-- Indicators -->
+                <ol class="carousel-indicators hidden-xs">
+                    <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+                    <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+                    <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+                </ol>
+                <!-- Wrapper for slides -->
+                <div class="carousel-inner">
+                    <div class="item active">
+                        <img class="img-responsive img-full" src="/Images/Bootstrap/slide-1.jpg" alt="">
+                    </div>
+                    <div class="item">
+                        <img class="img-responsive img-full" src="/Images/Bootstrap/slide-2.jpg" alt="">
+                    </div>
+                    <div class="item">
+                        <img class="img-responsive img-full" src="/Images/Bootstrap/slide-3.jpg" alt="">
+                    </div>
+                </div>
+                <!-- Controls -->
+                <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
+                    <span class="icon-prev"></span>
+                </a>
+                <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
+                    <span class="icon-next"></span>
+                </a>
+            </div>
+            <h2 class="brand-before">
+                <small>Welcome to</small>
+            </h2>
+            <h1 class="brand-name">Testify</h1>
+            <hr class="tagline-divider">
+            <h2>
+                <small>
+                    By
+                    <strong>Gv chowdary</strong>
+                </small>
+            </h2>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="box">
+        <div class="col-lg-12">
+            <hr>
+            <h2 class="intro-text text-center">
+                 website
+                <strong>Background</strong>
+            </h2>
+            <hr>
+            <img class="img-responsive img-border img-left" src="/Images/Bootstrap/intro-pic.jpg" alt="">
+            <hr class="visible-xs">
+            <p>I decided to build my web application where landlord and tenant can communicate with their problems and landlord can even be able to manage his/her property and tenants. The main concept of the application is to provide a tenant and landlord communication and helping the landlord to manage with his/her tenants and property problems.
+               In this process of developing the application, I have been learned working with Azure cloud services and I have a little experience working with the visual studio in my third year for the module Advance Internet technologies and even in the work placement module third year.
+             I have been working with the visual studio but the new concept is MVC Model-view-controller. I haven’t worked with this framework I have learned about it and tried to implement it. I have gone thought several stages while learning it and implementing it to my project. C# is an object oriented language. I have used in this project to code.
+            </p>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="box">
+        <div class="col-lg-12">
+            <hr>
+            <h2 class="intro-text text-center">
+                Landlord and Tenant
+                <strong>Login content</strong>
+            </h2>
+            <hr>
+            <p>
+                @Html.ActionLink("Login For LandLord", "Login", "Account", new { id = 1 }, null)
+                <br />
+                @Html.ActionLink("Login For Tenant", "Login", "Account", new { id = 2 }, null)
+            </p>
+        </div>
+    </div>
+</div>

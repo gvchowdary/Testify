@@ -1,0 +1,396 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="TestifyModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+        <EntityType Name="Contact">
+          <Key>
+            <PropertyRef Name="ContactId" />
+          </Key>
+          <Property Name="ContactId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ContactName" Type="varchar" MaxLength="50" />
+          <Property Name="EmailAddress" Type="varchar" MaxLength="25" />
+          <Property Name="PhoneNumber" Type="varchar" MaxLength="15" />
+          <Property Name="Message" Type="varchar(max)" />
+          <Property Name="CreatedDate" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="EmailTemplates">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EmailTemplateId" Type="int" />
+          <Property Name="EmailBodyTemplate" Type="varchar(max)" />
+          <Property Name="IsActive" Type="bit" />
+        </EntityType>
+        <EntityType Name="LandlordHouseDetail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LandlordId" Type="int" />
+          <Property Name="PRTBNO" Type="varchar" MaxLength="50" />
+          <Property Name="Address" Type="varchar" MaxLength="250" />
+          <Property Name="IsActive" Type="bit" />
+        </EntityType>
+        <EntityType Name="LandlordRegistration">
+          <Key>
+            <PropertyRef Name="LandlordId" />
+          </Key>
+          <Property Name="LandlordId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="varchar" MaxLength="50" />
+          <Property Name="LastName" Type="varchar" MaxLength="50" />
+          <Property Name="PPSNNO" Type="varchar" MaxLength="50" />
+          <Property Name="PhoneNo" Type="varchar" MaxLength="15" />
+          <Property Name="Address" Type="varchar" MaxLength="250" />
+          <Property Name="IsActive" Type="bit" />
+          <Property Name="Email" Type="varchar" MaxLength="25" />
+          <Property Name="Password" Type="varchar" MaxLength="20" />
+          <Property Name="TokenId" Type="varchar" MaxLength="50" />
+          <Property Name="CreatedDate" Type="varchar" MaxLength="25" />
+        </EntityType>
+        <EntityType Name="TenantRegistration">
+          <Key>
+            <PropertyRef Name="TenantId" />
+          </Key>
+          <Property Name="TenantId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="varchar" MaxLength="20" />
+          <Property Name="LastName" Type="varchar" MaxLength="20" />
+          <Property Name="LandlordPRTBNO" Type="int" />
+          <Property Name="PPSNNO" Type="varchar" MaxLength="20" />
+          <Property Name="PhoneNo" Type="varchar" MaxLength="15" />
+          <Property Name="Address" Type="varchar" MaxLength="250" />
+          <Property Name="IsActive" Type="bit" />
+          <Property Name="Email" Type="varchar" MaxLength="25" />
+          <Property Name="Password" Type="varchar" MaxLength="20" />
+          <Property Name="TokenId" Type="varchar" MaxLength="50" />
+          <Property Name="CreatedDate" Type="varchar" MaxLength="25" />
+        </EntityType>
+        <EntityType Name="TenantTickets">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="varchar" MaxLength="50" />
+          <Property Name="Description" Type="varchar(max)" />
+          <Property Name="TenantId" Type="int" />
+          <Property Name="IsActive" Type="bit" />
+          <Property Name="CreatedDate" Type="varchar" MaxLength="20" />
+          <Property Name="ModifiedDate" Type="varchar" MaxLength="20" />
+          <Property Name="Status" Type="varchar" MaxLength="15" />
+          <Property Name="ApprovedDate" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <Association Name="FK_LandlordHouseDetail_LandlordRegistration">
+          <End Role="LandlordRegistration" Type="Self.LandlordRegistration" Multiplicity="0..1" />
+          <End Role="LandlordHouseDetail" Type="Self.LandlordHouseDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LandlordRegistration">
+              <PropertyRef Name="LandlordId" />
+            </Principal>
+            <Dependent Role="LandlordHouseDetail">
+              <PropertyRef Name="LandlordId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TenantRegistration_TenantRegistration">
+          <End Role="LandlordHouseDetail" Type="Self.LandlordHouseDetail" Multiplicity="0..1" />
+          <End Role="TenantRegistration" Type="Self.TenantRegistration" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LandlordHouseDetail">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TenantRegistration">
+              <PropertyRef Name="LandlordPRTBNO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TenantTickets_TenantRegistration">
+          <End Role="TenantRegistration" Type="Self.TenantRegistration" Multiplicity="0..1" />
+          <End Role="TenantTickets" Type="Self.TenantTickets" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TenantRegistration">
+              <PropertyRef Name="TenantId" />
+            </Principal>
+            <Dependent Role="TenantTickets">
+              <PropertyRef Name="TenantId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="TestifyModelStoreContainer">
+          <EntitySet Name="Contact" EntityType="Self.Contact" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EmailTemplates" EntityType="Self.EmailTemplates" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LandlordHouseDetail" EntityType="Self.LandlordHouseDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LandlordRegistration" EntityType="Self.LandlordRegistration" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TenantRegistration" EntityType="Self.TenantRegistration" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TenantTickets" EntityType="Self.TenantTickets" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_LandlordHouseDetail_LandlordRegistration" Association="Self.FK_LandlordHouseDetail_LandlordRegistration">
+            <End Role="LandlordRegistration" EntitySet="LandlordRegistration" />
+            <End Role="LandlordHouseDetail" EntitySet="LandlordHouseDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TenantRegistration_TenantRegistration" Association="Self.FK_TenantRegistration_TenantRegistration">
+            <End Role="LandlordHouseDetail" EntitySet="LandlordHouseDetail" />
+            <End Role="TenantRegistration" EntitySet="TenantRegistration" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TenantTickets_TenantRegistration" Association="Self.FK_TenantTickets_TenantRegistration">
+            <End Role="TenantRegistration" EntitySet="TenantRegistration" />
+            <End Role="TenantTickets" EntitySet="TenantTickets" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="TestifyModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+        <EntityContainer Name="TestifyEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Contacts" EntityType="TestifyModel.Contact" />
+          <EntitySet Name="EmailTemplates" EntityType="TestifyModel.EmailTemplate" />
+          <EntitySet Name="LandlordHouseDetails" EntityType="TestifyModel.LandlordHouseDetail" />
+          <EntitySet Name="LandlordRegistrations" EntityType="TestifyModel.LandlordRegistration" />
+          <EntitySet Name="TenantRegistrations" EntityType="TestifyModel.TenantRegistration" />
+          <EntitySet Name="TenantTickets" EntityType="TestifyModel.TenantTicket" />
+          <AssociationSet Name="FK_LandlordHouseDetail_LandlordRegistration" Association="TestifyModel.FK_LandlordHouseDetail_LandlordRegistration">
+            <End Role="LandlordRegistration" EntitySet="LandlordRegistrations" />
+            <End Role="LandlordHouseDetail" EntitySet="LandlordHouseDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TenantRegistration_TenantRegistration" Association="TestifyModel.FK_TenantRegistration_TenantRegistration">
+            <End Role="LandlordHouseDetail" EntitySet="LandlordHouseDetails" />
+            <End Role="TenantRegistration" EntitySet="TenantRegistrations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TenantTickets_TenantRegistration" Association="TestifyModel.FK_TenantTickets_TenantRegistration">
+            <End Role="TenantRegistration" EntitySet="TenantRegistrations" />
+            <End Role="TenantTicket" EntitySet="TenantTickets" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Contact">
+          <Key>
+            <PropertyRef Name="ContactId" />
+          </Key>
+          <Property Name="ContactId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ContactName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="EmailAddress" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="Message" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedDate" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="EmailTemplate">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EmailTemplateId" Type="Int32" />
+          <Property Name="EmailBodyTemplate" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="IsActive" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="LandlordHouseDetail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LandlordId" Type="Int32" />
+          <Property Name="PRTBNO" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Address" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="IsActive" Type="Boolean" />
+          <NavigationProperty Name="LandlordRegistration" Relationship="TestifyModel.FK_LandlordHouseDetail_LandlordRegistration" FromRole="LandlordHouseDetail" ToRole="LandlordRegistration" />
+          <NavigationProperty Name="TenantRegistrations" Relationship="TestifyModel.FK_TenantRegistration_TenantRegistration" FromRole="LandlordHouseDetail" ToRole="TenantRegistration" />
+        </EntityType>
+        <EntityType Name="LandlordRegistration">
+          <Key>
+            <PropertyRef Name="LandlordId" />
+          </Key>
+          <Property Name="LandlordId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PPSNNO" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PhoneNo" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="Address" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="Email" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="TokenId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedDate" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="LandlordHouseDetails" Relationship="TestifyModel.FK_LandlordHouseDetail_LandlordRegistration" FromRole="LandlordRegistration" ToRole="LandlordHouseDetail" />
+        </EntityType>
+        <EntityType Name="TenantRegistration">
+          <Key>
+            <PropertyRef Name="TenantId" />
+          </Key>
+          <Property Name="TenantId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="LastName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="LandlordPRTBNO" Type="Int32" />
+          <Property Name="PPSNNO" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="PhoneNo" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="Address" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="Email" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="TokenId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedDate" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="LandlordHouseDetail" Relationship="TestifyModel.FK_TenantRegistration_TenantRegistration" FromRole="TenantRegistration" ToRole="LandlordHouseDetail" />
+          <NavigationProperty Name="TenantTickets" Relationship="TestifyModel.FK_TenantTickets_TenantRegistration" FromRole="TenantRegistration" ToRole="TenantTicket" />
+        </EntityType>
+        <EntityType Name="TenantTicket">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="TenantId" Type="Int32" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="CreatedDate" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="ModifiedDate" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Status" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="ApprovedDate" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="TenantRegistration" Relationship="TestifyModel.FK_TenantTickets_TenantRegistration" FromRole="TenantTicket" ToRole="TenantRegistration" />
+        </EntityType>
+        <Association Name="FK_LandlordHouseDetail_LandlordRegistration">
+          <End Type="TestifyModel.LandlordRegistration" Role="LandlordRegistration" Multiplicity="0..1" />
+          <End Type="TestifyModel.LandlordHouseDetail" Role="LandlordHouseDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LandlordRegistration">
+              <PropertyRef Name="LandlordId" />
+            </Principal>
+            <Dependent Role="LandlordHouseDetail">
+              <PropertyRef Name="LandlordId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TenantRegistration_TenantRegistration">
+          <End Type="TestifyModel.LandlordHouseDetail" Role="LandlordHouseDetail" Multiplicity="0..1" />
+          <End Type="TestifyModel.TenantRegistration" Role="TenantRegistration" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LandlordHouseDetail">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TenantRegistration">
+              <PropertyRef Name="LandlordPRTBNO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TenantTickets_TenantRegistration">
+          <End Type="TestifyModel.TenantRegistration" Role="TenantRegistration" Multiplicity="0..1" />
+          <End Type="TestifyModel.TenantTicket" Role="TenantTicket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TenantRegistration">
+              <PropertyRef Name="TenantId" />
+            </Principal>
+            <Dependent Role="TenantTicket">
+              <PropertyRef Name="TenantId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="TestifyModelStoreContainer" CdmEntityContainer="TestifyEntities">
+          <EntitySetMapping Name="Contacts">
+            <EntityTypeMapping TypeName="TestifyModel.Contact">
+              <MappingFragment StoreEntitySet="Contact">
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="Message" ColumnName="Message" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
+                <ScalarProperty Name="ContactName" ColumnName="ContactName" />
+                <ScalarProperty Name="ContactId" ColumnName="ContactId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EmailTemplates">
+            <EntityTypeMapping TypeName="TestifyModel.EmailTemplate">
+              <MappingFragment StoreEntitySet="EmailTemplates">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="EmailBodyTemplate" ColumnName="EmailBodyTemplate" />
+                <ScalarProperty Name="EmailTemplateId" ColumnName="EmailTemplateId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LandlordHouseDetails">
+            <EntityTypeMapping TypeName="TestifyModel.LandlordHouseDetail">
+              <MappingFragment StoreEntitySet="LandlordHouseDetail">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="PRTBNO" ColumnName="PRTBNO" />
+                <ScalarProperty Name="LandlordId" ColumnName="LandlordId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LandlordRegistrations">
+            <EntityTypeMapping TypeName="TestifyModel.LandlordRegistration">
+              <MappingFragment StoreEntitySet="LandlordRegistration">
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="TokenId" ColumnName="TokenId" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="PhoneNo" ColumnName="PhoneNo" />
+                <ScalarProperty Name="PPSNNO" ColumnName="PPSNNO" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LandlordId" ColumnName="LandlordId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TenantRegistrations">
+            <EntityTypeMapping TypeName="TestifyModel.TenantRegistration">
+              <MappingFragment StoreEntitySet="TenantRegistration">
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="TokenId" ColumnName="TokenId" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="PhoneNo" ColumnName="PhoneNo" />
+                <ScalarProperty Name="PPSNNO" ColumnName="PPSNNO" />
+                <ScalarProperty Name="LandlordPRTBNO" ColumnName="LandlordPRTBNO" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="TenantId" ColumnName="TenantId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TenantTickets">
+            <EntityTypeMapping TypeName="TestifyModel.TenantTicket">
+              <MappingFragment StoreEntitySet="TenantTickets">
+                <ScalarProperty Name="ApprovedDate" ColumnName="ApprovedDate" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="TenantId" ColumnName="TenantId" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

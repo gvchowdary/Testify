@@ -1,0 +1,136 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="TestifyModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+  <EntityType Name="Contact">
+    <Key>
+      <PropertyRef Name="ContactId" />
+    </Key>
+    <Property Name="ContactId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ContactName" Type="varchar" MaxLength="50" />
+    <Property Name="EmailAddress" Type="varchar" MaxLength="25" />
+    <Property Name="PhoneNumber" Type="varchar" MaxLength="15" />
+    <Property Name="Message" Type="varchar(max)" />
+    <Property Name="CreatedDate" Type="varchar" MaxLength="20" />
+  </EntityType>
+  <EntityType Name="EmailTemplates">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="EmailTemplateId" Type="int" />
+    <Property Name="EmailBodyTemplate" Type="varchar(max)" />
+    <Property Name="IsActive" Type="bit" />
+  </EntityType>
+  <EntityType Name="LandlordHouseDetail">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="LandlordId" Type="int" />
+    <Property Name="PRTBNO" Type="varchar" MaxLength="50" />
+    <Property Name="Address" Type="varchar" MaxLength="250" />
+    <Property Name="IsActive" Type="bit" />
+  </EntityType>
+  <EntityType Name="LandlordRegistration">
+    <Key>
+      <PropertyRef Name="LandlordId" />
+    </Key>
+    <Property Name="LandlordId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FirstName" Type="varchar" MaxLength="50" />
+    <Property Name="LastName" Type="varchar" MaxLength="50" />
+    <Property Name="PPSNNO" Type="varchar" MaxLength="50" />
+    <Property Name="PhoneNo" Type="varchar" MaxLength="15" />
+    <Property Name="Address" Type="varchar" MaxLength="250" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="Email" Type="varchar" MaxLength="25" />
+    <Property Name="Password" Type="varchar" MaxLength="20" />
+    <Property Name="TokenId" Type="varchar" MaxLength="50" />
+    <Property Name="CreatedDate" Type="varchar" MaxLength="25" />
+  </EntityType>
+  <EntityType Name="TenantRegistration">
+    <Key>
+      <PropertyRef Name="TenantId" />
+    </Key>
+    <Property Name="TenantId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FirstName" Type="varchar" MaxLength="20" />
+    <Property Name="LastName" Type="varchar" MaxLength="20" />
+    <Property Name="LandlordPRTBNO" Type="int" />
+    <Property Name="PPSNNO" Type="varchar" MaxLength="20" />
+    <Property Name="PhoneNo" Type="varchar" MaxLength="15" />
+    <Property Name="Address" Type="varchar" MaxLength="250" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="Email" Type="varchar" MaxLength="25" />
+    <Property Name="Password" Type="varchar" MaxLength="20" />
+    <Property Name="TokenId" Type="varchar" MaxLength="50" />
+    <Property Name="CreatedDate" Type="varchar" MaxLength="25" />
+  </EntityType>
+  <EntityType Name="TenantTickets">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Title" Type="varchar" MaxLength="50" />
+    <Property Name="Description" Type="varchar(max)" />
+    <Property Name="TenantId" Type="int" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="CreatedDate" Type="varchar" MaxLength="20" />
+    <Property Name="ModifiedDate" Type="varchar" MaxLength="20" />
+    <Property Name="Status" Type="varchar" MaxLength="15" />
+    <Property Name="ApprovedDate" Type="varchar" MaxLength="20" />
+  </EntityType>
+  <Association Name="FK_LandlordHouseDetail_LandlordRegistration">
+    <End Role="LandlordRegistration" Type="Self.LandlordRegistration" Multiplicity="0..1" />
+    <End Role="LandlordHouseDetail" Type="Self.LandlordHouseDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="LandlordRegistration">
+        <PropertyRef Name="LandlordId" />
+      </Principal>
+      <Dependent Role="LandlordHouseDetail">
+        <PropertyRef Name="LandlordId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TenantRegistration_TenantRegistration">
+    <End Role="LandlordHouseDetail" Type="Self.LandlordHouseDetail" Multiplicity="0..1" />
+    <End Role="TenantRegistration" Type="Self.TenantRegistration" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="LandlordHouseDetail">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="TenantRegistration">
+        <PropertyRef Name="LandlordPRTBNO" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TenantTickets_TenantRegistration">
+    <End Role="TenantRegistration" Type="Self.TenantRegistration" Multiplicity="0..1" />
+    <End Role="TenantTickets" Type="Self.TenantTickets" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TenantRegistration">
+        <PropertyRef Name="TenantId" />
+      </Principal>
+      <Dependent Role="TenantTickets">
+        <PropertyRef Name="TenantId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="TestifyModelStoreContainer">
+    <EntitySet Name="Contact" EntityType="Self.Contact" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="EmailTemplates" EntityType="Self.EmailTemplates" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="LandlordHouseDetail" EntityType="Self.LandlordHouseDetail" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="LandlordRegistration" EntityType="Self.LandlordRegistration" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TenantRegistration" EntityType="Self.TenantRegistration" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TenantTickets" EntityType="Self.TenantTickets" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_LandlordHouseDetail_LandlordRegistration" Association="Self.FK_LandlordHouseDetail_LandlordRegistration">
+      <End Role="LandlordRegistration" EntitySet="LandlordRegistration" />
+      <End Role="LandlordHouseDetail" EntitySet="LandlordHouseDetail" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TenantRegistration_TenantRegistration" Association="Self.FK_TenantRegistration_TenantRegistration">
+      <End Role="LandlordHouseDetail" EntitySet="LandlordHouseDetail" />
+      <End Role="TenantRegistration" EntitySet="TenantRegistration" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TenantTickets_TenantRegistration" Association="Self.FK_TenantTickets_TenantRegistration">
+      <End Role="TenantRegistration" EntitySet="TenantRegistration" />
+      <End Role="TenantTickets" EntitySet="TenantTickets" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

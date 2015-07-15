@@ -1,0 +1,188 @@
+﻿@model    List<AppNameTestify.Models.HouseModel>
+
+@{
+    ViewBag.Title = "Report Details";
+    Layout = "~/Views/Shared/_LandlordLayout.cshtml";
+}
+<script src="~/Scripts/jquery-1.7.1.min.js"></script>
+<script src="~/Scripts/Testify.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#ddlHouse").change(function () {
+            //Get DropDownlist selected item index
+            var selectedIndex = $(this).find("option:selected").index();
+            //Get DropDownlist selected item value
+            var selectedValue = $(this).find("option:selected").val();
+            //Get DropDownlist selected item text
+            var selectedText = $(this).find("option:selected").text();
+          
+            ReloadPendingTicketsGrid(selectedValue);
+            ReloadApprovedTicketsGrid(selectedValue);
+
+        });
+    }
+
+
+    );
+    $(document).ready(function () {
+        LoadLoginPartialView(1);
+        BindTicketDetails(0);
+    });
+
+    function BindTicketDetails(prtbid) {
+
+        $("#grid").jqGrid({
+            url: "/Landlord/GetTicketLists?status=Pending&prtbid=" + prtbid,
+            datatype: 'json',
+            mtype: 'Get',
+            colNames: ['ID', 'TenantId', 'FirstName', 'LastName', 'Email', 'PhoneNo', 'Title', 'Description', 'IsActive', 'CreatedDate', 'ModifiedDate', 'Status'],
+            colModel: [
+                { key: true, hidden: true, name: 'ID', index: 'ID', editable: true },
+                { key: false, hidden: true, name: 'TenantId', index: 'TenantId', editable: true },
+                { key: false, name: 'FirstName', index: 'FirstName', editable: true, editoptions: { readonly: true, size: 26 } },
+                { key: false, name: 'LastName', index: 'LastName', editable: true, editoptions: { readonly: true, size: 26 } },
+                { key: false, name: 'Email', index: 'Email', editable: true, editoptions: { readonly: true, size: 26 } },
+                { key: false, name: 'PhoneNo', index: 'PhoneNo', editable: true, editoptions: { readonly: true, size: 26 } },
+                { key: false, name: 'Title', index: 'Title', editable: true, editoptions: { readonly: true, size: 26 } },
+                { key: false, name: 'Description', index: 'Description', editable: true,  edittype: 'textarea', editoptions: { readonly: true, rows: "8", cols: "26" } },
+                { key: false, hidden: true, name: 'IsActive', index: 'IsActive', editable: true },
+                { key: false,  name: 'CreatedDate', index: 'CreatedDate', editable: false},
+                { key: false, name: 'ModifiedDate', index: 'ModifiedDate', editable: false },
+                { key: false, name: 'Status', index: 'Status', editable: true, edittype: 'select', editoptions: { value: { 'Pending': 'Pending', 'Approved': 'Approved' }} }
+
+            ],
+            pager: jQuery('#pager'),
+            rowNum: 10,
+            rowList: [10, 20, 30, 40],
+            height: '100%',
+            viewrecords: true,
+            caption: 'Pending Report Details',
+            emptyrecords: 'No records to display',
+            jsonReader: {
+                root: "rows",
+                page: "page",
+                total: "total",
+                records: "records",
+                repeatitems: false,
+                Id: "0"
+            },
+            autowidth: true,
+            multiselect: false
+        }).navGrid('#pager', { edit: true, add: false, del: false, search: false, refresh: true },
+        {
+            // edit options
+            zIndex: 100,
+            autowidth: true,
+            autoheight: true,
+            url: '/Landlord/EditTicket',
+            closeOnEscape: true,
+            closeAfterEdit: true,
+            recreateForm: true,
+            afterComplete: function (response) {
+                if (response.responseText) {
+
+                    ReloadApprovedTicketsGrid($("#ddlHouse").find("option:selected").val());
+                    alert(response.responseText);
+                }
+            }
+        }
+
+        );
+
+
+        //Approved Tickets GridView
+        $("#grid1").jqGrid({
+            url: "/Tenant/GetTicketLists?status=Approved&prtbid=" + prtbid,
+            datatype: 'json',
+            mtype: 'Get',
+            colNames: ['ID', 'TenantId', 'FirstName', 'LastName', 'Email', 'PhoneNo', 'Title', 'Description', 'IsActive', 'CreatedDate', 'ModifiedDate','ApprovedDate', 'Status'],
+            colModel: [
+                { key: true, hidden: true, name: 'ID', index: 'ID', },
+                { key: false, hidden: true, name: 'TenantId', index: 'TenantId' },
+                 { key: false, name: 'FirstName', index: 'FirstName' },
+                { key: false, name: 'LastName', index: 'LastName'},
+                { key: false, name: 'Email', index: 'Email' },
+                { key: false, name: 'PhoneNo', index: 'PhoneNo' },
+                { key: false, name: 'Title', index: 'Title' },
+                { key: false, name: 'Description', index: 'Description' },
+                { key: false, hidden: true, name: 'IsActive', index: 'IsActive' },
+                { key: false,  name: 'CreatedDate', index: 'CreatedDate' },
+                { key: false,  name: 'ModifiedDate', index: 'ModifiedDate' },
+                { key: false, name: 'ApprovedDate', index: 'ApprovedDate'},
+                { key: false, name: 'Status', index: 'Status' }
+            ],
+            pager: jQuery('#pager1'),
+            rowNum: 10,
+            rowList: [10, 20, 30, 40],
+            height: '100%',
+            viewrecords: true,
+            caption: 'Approved Report Details',
+            emptyrecords: 'No records to display',
+            jsonReader: {
+                root: "rows",
+                page: "page",
+                total: "total",
+                records: "records",
+                repeatitems: false,
+                Id: "0"
+            },
+            autowidth: true,
+            multiselect: false
+        }).navGrid('#pager1', { edit: false, add: false, del: false, search: false, refresh: true }
+
+
+            );
+    }
+    function ReloadPendingTicketsGrid(prtbid) {
+        //For Pending Tickets Reload
+        var url = "/Landlord/GetTicketLists?status=Pending&prtbid=" + prtbid;
+        $("#grid").jqGrid('setGridParam', { url: url });
+        $("#grid").trigger("reloadGrid");
+
+    }
+    function ReloadApprovedTicketsGrid(prtbid) {
+
+
+        //For Approved Tickets Reload
+        var url = "/Landlord/GetTicketLists?status=Approved&prtbid=" + prtbid;
+        $("#grid1").jqGrid('setGridParam', { url: url });
+        $("#grid1").trigger("reloadGrid");
+    }
+</script>
+
+<div class="row">
+    <div class="box">
+        <div class="col-lg-12">
+            <hr>
+            <h2 class="intro-text text-center">
+                Manage Report Details
+                <strong></strong>
+            </h2>
+            <hr>
+            <div>
+                @*<div style="float:right;padding-bottom:5px">
+                    @Html.ActionLink("Manage Houses", "ManageHouses", "Landlord")
+                </div>*@
+                <div style="padding-bottom:10px;text-align:center">Select PRTB NO @Html.DropDownList("ddlHouse", ViewBag.houseList as SelectList)</div>
+                <div>
+                    <table id="grid"></table>
+                    <div id="pager"></div>
+                </div>
+                <div style="padding-top:30px">
+                    <table id="grid1"></table>
+                    <div id="pager1"></div>
+                </div>
+                
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<link href="~/Content/themes/base/jquery-ui.css" rel="stylesheet" />
+<link href="~/Content/jquery.jqGrid/ui.jqgrid.css" rel="stylesheet" />
+<script src="~/Scripts/jquery-1.7.1.min.js"></script>
+<script src="~/Scripts/jquery-ui-1.8.20.min.js"></script>
+<script src="~/Scripts/i18n/grid.locale-en.js"></script>
+<script src="~/Scripts/jquery.jqGrid.min.js"></script>

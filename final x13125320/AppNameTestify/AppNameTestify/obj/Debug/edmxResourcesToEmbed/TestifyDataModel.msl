@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="AppNameTestifyModelStoreContainer" CdmEntityContainer="AppNameTestifyConn">
+    <EntitySetMapping Name="LandlordRegisters">
+      <EntityTypeMapping TypeName="AppNameTestifyModel.LandlordRegister">
+        <MappingFragment StoreEntitySet="LandlordRegister">
+          <ScalarProperty Name="LandlordId" ColumnName="LandlordId" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="PPSNNO" ColumnName="PPSNNO" />
+          <ScalarProperty Name="PhoneNo" ColumnName="PhoneNo" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TenantRegistrations">
+      <EntityTypeMapping TypeName="AppNameTestifyModel.TenantRegistration">
+        <MappingFragment StoreEntitySet="TenantRegistration">
+          <ScalarProperty Name="TenantId" ColumnName="TenantId" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="LandlordId" ColumnName="LandlordId" />
+          <ScalarProperty Name="PRTBNO" ColumnName="PRTBNO" />
+          <ScalarProperty Name="PhoneNo" ColumnName="PhoneNo" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

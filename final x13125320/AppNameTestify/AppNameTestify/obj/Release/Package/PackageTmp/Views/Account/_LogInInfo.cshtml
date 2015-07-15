@@ -1,0 +1,17 @@
+﻿@{
+    var userName = @ViewBag.UserName != null ? @ViewBag.UserName : string.Empty;
+}
+<style type="text/css">
+    #logindisplay a:link
+    {
+        color:blue;
+    }
+    #logindisplay a:visited {
+        color: blue;
+    }
+</style>
+<div>
+   
+ Weclome <b>@userName</b>  
+    @Html.ActionLink("LogOut", "LogOut", "Account",null, new { @class = "linkcolor" })
+</div>

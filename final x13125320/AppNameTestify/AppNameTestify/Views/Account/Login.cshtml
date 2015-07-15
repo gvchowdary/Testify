@@ -1,0 +1,67 @@
+﻿@model AppNameTestify.Models.LoginModel
+@{
+    ViewBag.Title = "Log in";
+    int ID = @ViewBag.id != null ? Convert.ToInt32(@ViewBag.id) : 0;
+
+
+}
+
+<div class="row">
+    <div class="box">
+        <div class="col-lg-12">
+            <hr>
+            <h2 class="intro-text text-center">
+                Login
+                <strong>form</strong>
+            </h2>
+            <hr>
+            <div>
+                @using (Html.BeginForm(new { Id = @ViewBag.id }))
+                {
+                    @Html.ValidationSummary(true)
+                    <div style="padding-top: 20px">
+                        @if (ID == 1)
+                        {
+                            <div style="width:33.33333333%">
+                                @Html.LabelFor(m => m.Email)
+                                <br />
+                                @Html.TextBoxFor(m => m.Email,  new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.Email)
+                            </div>
+                        }
+                        else
+                        {
+                            <div style="width:33.33333333%">
+                                @Html.LabelFor(m => m.PRTBNO)
+                                <br />
+                                @Html.TextBoxFor(m => m.PRTBNO,  new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.PRTBNO)
+                            </div>
+                        }
+
+                        <div style="padding-top: 20px; width: 33.33333333%">
+                            @Html.LabelFor(m => m.Password)
+                            <br />
+                            @Html.PasswordFor(m => m.Password,new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.Password)
+                        </div>
+                        <div style="padding-top: 20px">
+                            <input type="submit" value="Log in" class="btn btn-default" style="width:80px" />
+                            <input type="button" value="Cancel" class="btn btn-default" style="width:80px" onclick="document.location.href = $('#cancelUrl').attr('href');" />
+                            <a id="cancelUrl" href="@Html.AttributeEncode(Url.Action("Index", "Home"))" style="display:none;"></a>
+
+                        </div>
+                        <div style="padding-top:20px">
+                            @Html.ActionLink("Register", "Register", "Account", new { id = Convert.ToString(@ViewBag.id) }, new { @class = "rightPadding" })
+                            @Html.ActionLink("Forgot Password", "ForgotPassword", "Account", new { id = Convert.ToString(@ViewBag.id) }, null)
+                        </div>
+                    </div>
+                }
+            </div>
+            @section Scripts {
+                @Scripts.Render("~/bundles/jquery")
+                @Scripts.Render("~/bundles/jqueryval")
+            }
+        </div>
+    </div>
+</div>

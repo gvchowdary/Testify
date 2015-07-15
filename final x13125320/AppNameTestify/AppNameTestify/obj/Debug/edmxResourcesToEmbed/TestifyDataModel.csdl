@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="AppNameTestifyModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+  <EntityContainer Name="AppNameTestifyConn" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="LandlordRegisters" EntityType="AppNameTestifyModel.LandlordRegister" />
+    <EntitySet Name="TenantRegistrations" EntityType="AppNameTestifyModel.TenantRegistration" />
+    <AssociationSet Name="FK_TenantRegistration_LandlordRegister" Association="AppNameTestifyModel.FK_TenantRegistration_LandlordRegister">
+      <End Role="LandlordRegister" EntitySet="LandlordRegisters" />
+      <End Role="TenantRegistration" EntitySet="TenantRegistrations" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="LandlordRegister">
+    <Key>
+      <PropertyRef Name="LandlordId" />
+    </Key>
+    <Property Name="LandlordId" Type="Int32" Nullable="false" />
+    <Property Name="FirstName" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="LastName" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="PPSNNO" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="PhoneNo" Type="Int32" />
+    <Property Name="Address" Type="String" MaxLength="250" Unicode="false" FixedLength="false" />
+    <Property Name="IsActive" Type="Boolean" />
+    <NavigationProperty Name="TenantRegistrations" Relationship="AppNameTestifyModel.FK_TenantRegistration_LandlordRegister" FromRole="LandlordRegister" ToRole="TenantRegistration" />
+  </EntityType>
+  <EntityType Name="TenantRegistration">
+    <Key>
+      <PropertyRef Name="TenantId" />
+    </Key>
+    <Property Name="TenantId" Type="Int32" Nullable="false" />
+    <Property Name="FirstName" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
+    <Property Name="LastName" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
+    <Property Name="LandlordId" Type="Int32" />
+    <Property Name="PRTBNO" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
+    <Property Name="PhoneNo" Type="Int32" />
+    <Property Name="Address" Type="String" MaxLength="250" Unicode="false" FixedLength="false" />
+    <Property Name="IsActive" Type="Int32" />
+    <NavigationProperty Name="LandlordRegister" Relationship="AppNameTestifyModel.FK_TenantRegistration_LandlordRegister" FromRole="TenantRegistration" ToRole="LandlordRegister" />
+  </EntityType>
+  <Association Name="FK_TenantRegistration_LandlordRegister">
+    <End Role="LandlordRegister" Type="AppNameTestifyModel.LandlordRegister" Multiplicity="0..1" />
+    <End Role="TenantRegistration" Type="AppNameTestifyModel.TenantRegistration" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="LandlordRegister">
+        <PropertyRef Name="LandlordId" />
+      </Principal>
+      <Dependent Role="TenantRegistration">
+        <PropertyRef Name="LandlordId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

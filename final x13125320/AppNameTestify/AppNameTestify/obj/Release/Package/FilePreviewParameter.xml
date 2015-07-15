@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <parameter name="IIS Web Application Name" description="" value="appnametestify" tags="IisApp">
+    <parameterEntry kind="ProviderPath" scope="IisApp" match="^C:\\Users\\vchowdary\\Downloads\\New\ folder\\final\ x13125320\\AppNameTestify\\AppNameTestify\\obj\\Release\\Package\\PackageTmp$" />
+    <parameterEntry kind="ProviderPath" scope="setAcl" match="^C:\\Users\\vchowdary\\Downloads\\New\ folder\\final\ x13125320\\AppNameTestify\\AppNameTestify\\obj\\Release\\Package\\PackageTmp$" />
+  </parameter>
+  <parameter name="TestifyEntities-Web.config Connection String" description="" value="metadata=res://*/DBModel.TestifyModel.csdl|res://*/DBModel.TestifyModel.ssdl|res://*/DBModel.TestifyModel.msl;provider=System.Data.SqlClient;provider connection string=&quot;Data Source=tcp:pmzufqsnsx.database.windows.net,1433;Initial Catalog=testify;Integrated Security=False;User ID=Testify@pmzufqsnsx;Password=Chinni29123;Connect Timeout=30;Encrypt=True&quot;" tags="">
+    <parameterEntry kind="XmlFile" scope="C:\\Users\\vchowdary\\Downloads\\New\ folder\\final\ x13125320\\AppNameTestify\\AppNameTestify\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='TestifyEntities']/@connectionString" />
+  </parameter>
+</parameters>
